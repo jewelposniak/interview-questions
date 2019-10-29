@@ -1,26 +1,54 @@
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
-struct TreeNode
+vector<string> collapse(vector<string> v)
 {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
+    vector<string> t;
+    string s;
 
-void traverse(TreeNode* root)
-{
+    for(int i = 0; i < v.size(); i++)
+    {
+        for(int j = 0; j < v[i].length(); j++)
+        {
+            s = (v[i][j]);
+            t.push_back(s);
+        }
+    }
 
+    return v;
+}
+
+vector<string> wordSubsets(vector<string>& A, vector<string>& B) {
+
+    vector<string> updated = collapse(B);
+    
+    for(int i = 0; i < updated.size(); i++)
+    {
+        for(int j = 0; j < A.size(); j++)
+        {
+            if(A[j].find(updated[i]) == std::string::npos)
+                A.erase(A.begin()+j);
+                j--;
+        }
+    }
+    
+    return A;
     
 }
 
 
 int main(int argc, char const *argv[])
 {
-    traverse();
-    
+    vector<string> A;
+    A.push_back("hello");
+    A.push_back("world");
+    vector<string> B;
+    B.push_back("o");
+
+    wordSubsets(A,B);
+
     return 0;
 }
