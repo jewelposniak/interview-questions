@@ -4,51 +4,87 @@
 
 using namespace std;
 
-vector<string> collapse(vector<string> v)
-{
-    vector<string> t;
-    string s;
-
-    for(int i = 0; i < v.size(); i++)
+ int findMin(vector<int>& prices)
     {
-        for(int j = 0; j < v[i].length(); j++)
+        int min = 0;
+        
+        for(int i = 1; i < prices.size(); i++)
         {
-            s = (v[i][j]);
-            t.push_back(s);
+            if(prices[i] < prices[min])
+            {
+                min = i;
+            }
         }
-    }
-
-    return v;
-}
-
-vector<string> wordSubsets(vector<string>& A, vector<string>& B) {
-
-    vector<string> updated = collapse(B);
-    
-    for(int i = 0; i < updated.size(); i++)
-    {
-        for(int j = 0; j < A.size(); j++)
-        {
-            if(A[j].find(updated[i]) == std::string::npos)
-                A.erase(A.begin()+j);
-                j--;
-        }
+        
+        return min;
     }
     
-    return A;
+    int findMin(vector<int>& prices, int x)
+    {
+        int min = 0;
+        
+        for(int i = min; i < x; i++)
+        {
+            if(prices[i] < prices[min])
+            {
+                min = i;
+            }
+        }
+        
+        return min;
+    }
     
-}
+    int findMax(vector<int>& prices)
+    {
+        int max = 0;
+        
+        for(int i = 1; i < prices.size(); i++)
+        {
+            if(prices[i] >= prices[max])
+            {
+                max = i;
+            }
+        }
+        
+        return max;
+    }
+    
+    int findMax(vector<int>& prices, int x)
+    {
+        int max = x;
+        
+        for(int i = x; i < prices.size(); i++)
+        {
+            if(prices[i] >= prices[max])
+            {
+                max = i;
+            }
+        }
+        
+        return max;
+    }
+    
+    int CompareTo(int x, int y)
+    {
+        if(x > y)
+            return x;
+        else return y;
+    }
+    
+    
+    int maxProfit(vector<int>& prices) {
+        int min = findMin(prices);
+        int max = findMax(prices);
+        int maxCap = findMax(prices, min);
+        int minCap = findMin(prices, max);
+        
+        return CompareTo(prices[maxCap]-prices[min], prices[max]-prices[minCap]);
+    }
 
-
-int main(int argc, char const *argv[])
-{
-    vector<string> A;
-    A.push_back("hello");
-    A.push_back("world");
-    vector<string> B;
-    B.push_back("o");
-
-    wordSubsets(A,B);
-
-    return 0;
-}
+    int main(int argc, char const *argv[])
+    {
+        vector<int> v;
+        cout << maxProfit(v) << endl;
+        return 0;
+    }
+    
