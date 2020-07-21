@@ -1,11 +1,3 @@
-#include <cmath>
-#include <cstdio>
-#include <vector>
-#include <iostream>
-#include <algorithm>
-#include <stack>
-#include <ctime>
-using namespace std;
 
 /*
     std::clock_t start;
@@ -16,8 +8,18 @@ using namespace std;
 
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
 
+    operation1.push_back(duration);
+
     std::cout<<"printf: "<< duration <<'\n';
 */
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <stack>
+using namespace std;
 
 
 int main() {
@@ -34,8 +36,7 @@ int main() {
     
     stack<int> s1;
     stack<int> s2;
-
-
+    
     for(int i = 0; i < loop; i++)
     {
         cin >> operation;
@@ -49,7 +50,22 @@ int main() {
             start = std::clock();
 
             cin >> number;
+ 
+            while(!s1.empty())
+            {
+                int temp = s1.top();
+                s2.push(temp);
+                s1.pop();
+            }
+
             s1.push(number);
+            
+            while(!s2.empty())
+            {
+                int temp = s2.top();
+                s1.push(temp);
+                s2.pop();
+            }
 
             duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
 
@@ -58,65 +74,36 @@ int main() {
         }
         if(operation == 2)
         {
-            
-            std::clock_t start;
-            double duration;
-
-            start = std::clock();
-
             //flip onto new stack
             //pop
             //transfer back onto stack one
 
-            while(!s1.empty())
-            {
-                int temp = s1.top();
-                s2.push(temp);
-                s1.pop();
-            }
-            
-            s2.pop();
-            
-            while(!s2.empty())
-            {
-                int temp = s2.top();
-                s1.push(temp);
-                s2.pop();
-            }
-
-            duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-
-            operation2.push_back(duration);
-        }   
-        if(operation == 3)
-        {
             std::clock_t start;
             double duration;
 
             start = std::clock();
 
-            //flip onto new stack
-            //get the top element
+            s1.pop();
+
+            duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+
+            operation2.push_back(duration);
             
-            while(!s1.empty())
-            {
-                int temp = s1.top();
-                s2.push(temp);
-                s1.pop();
-            }
-            
-            cout << s2.top() << endl;
-            
-            while(!s2.empty())
-            {
-                int temp = s2.top();
-                s1.push(temp);
-                s2.pop();
-            }
+        }   
+        if(operation == 3)
+        {
+
+            std::clock_t start;
+            double duration;
+
+            start = std::clock();
+
+            cout << s1.top() << endl;
 
             duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
 
             operation3.push_back(duration);
+
             
         }
     }
@@ -149,6 +136,6 @@ int main() {
     cout << "average 1: " << avg1 << endl;
     cout << "average 2: " << avg2 << endl;
     cout << "average 3: " << avg3 << endl;
-
+    
     return 0;
 }
