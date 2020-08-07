@@ -147,26 +147,14 @@
 #include <iostream>
 #include <algorithm>
 #include <queue>
+#include <unordered_map>
 using namespace std;
 
 int main () {
 
-    queue<int> test;
+    unordered_map <char,int> myMap;
 
-    test.push(1);
-    test.push(2);
-
-    cout << test.front() << endl;
-    cout << test.back() << endl;
-
-    int *ptr = &test.back();
-    ptr--;
-
-    cout << *ptr << endl;
-
-    test.back() = *ptr;
-
-    cout << test.back() << endl;
+    cout << myMap['a'] << endl;
 
     return 0;
 }
